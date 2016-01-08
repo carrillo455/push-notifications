@@ -1,0 +1,6 @@
+{
+    "short_name": "Push Me",
+    "name": "Push Notification Test",
+    "gcm_sender_id": "627998380089",
+    "display": "standalone" // Para quitar todo lo del navegador (url, menu, etc.)
+}
