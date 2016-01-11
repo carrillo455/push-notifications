@@ -23,7 +23,7 @@
 
 var API_ENDPOINT = 'php/api.php?accion=obtener-ultimo-mensaje';
 
-function showNotification(title, body, icon) {
+function showNotification(title, body, icon, data) {
     console.log('showNotification');
     // Firefox has an issue with showing a notification with the icon from
     // the Yaho API
@@ -32,7 +32,8 @@ function showNotification(title, body, icon) {
     var notificationOptions = {
         body: body,
         icon: icon ? icon : '/images/alert.png',
-        tag: 'simple-push-demo-notification'
+        tag: 'simple-push-demo-notification',
+        data: data
     };
     return self.registration.showNotification(title, notificationOptions);
 }
@@ -83,7 +84,7 @@ self.addEventListener('push', function(event) {
                 };
 
                 if (!self.registration.getNotifications) {
-                    return showNotification(title, body, icon);
+                    return showNotification(title, body, icon, notificationData);
                 }
 
                 // Check if a notification is already displayed
@@ -170,4 +171,10 @@ self.addEventListener('push', function(event) {
             tag: 'my-tag'+id
         }));
     }, "json");*/
+});
+
+self.addEventListener('notificationclick', function(event) {
+    var url = event.notification.data.url;
+    event.notification.close();
+    event.waitUntil(clients.openWindow(url));
 });
