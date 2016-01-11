@@ -64,11 +64,6 @@ self.addEventListener('push', function(event) {
             .then(function(data) {
                 var resultado = data.resultado,
                     mensaje = resultado.mensaje;
-                console.log(data);
-                if (mensaje.length === 0) {
-                    // No hay mensajes
-                    throw new Error();
-                }
 
                 var id = mensaje.id,
                     title = mensaje.title,
@@ -119,10 +114,10 @@ self.addEventListener('push', function(event) {
             })
             .catch(function(err) {
                 // console.error('A Problem occured with handling the push msg', err);
-                console.log("No hay mensajes nuevos.");
+                console.log("Ocurrió un problema al intentar obtener el mensaje.", err);
 
-                var title = 'No hay mensajes!';
-                var body = 'Por el momento no hay mensajes nuevos.';
+                var title = "¡Oops algo paso!";
+                var body = "No se pudo obtener el mensaje, hubo falló en su conexión a Internet.";
 
                 return showNotification(title, body);
             })

@@ -2,13 +2,6 @@
 
 // TODO
 if ('serviceWorker' in navigator) {
-    window.mensaje = {
-        id: 0,
-        title: "",
-        body: "",
-        icon: ""
-    };
-
     console.log('Service Worker is supported');
     navigator.serviceWorker.register('sw.js').then(function() {
         return navigator.serviceWorker.ready;
@@ -27,12 +20,12 @@ if ('serviceWorker' in navigator) {
     }).catch(function(error) {
         console.log('Service Worker error :^(', error);
     });
-
-    $("#mandar-mensaje").on("click", function() {
-        $.post("php/api.php", {
-            accion: "mandar-mensaje"
-        }, function (data) {
-            console.log(data);
-        }, "json");
-    });
 }
+
+$("#mandar-mensaje").on("click", function() {
+    $.post("php/api.php", {
+        accion: "mandar-mensaje"
+    }, function (data) {
+        console.log(data);
+    }, "json");
+});
