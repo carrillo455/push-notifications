@@ -33,12 +33,19 @@
         break;
 
         case "obtener-ultimo-mensaje":
-            $query = $pdo->query("SELECT id, title, body,
-                icon_src, timestamp FROM messages WHERE was_read = 0");
-            $mensaje = $query->fetch(PDO::FETCH_ASSOC);
+            $query = $pdo->prepare("SELECT id, title, body,
+                icon_src, timestamp FROM messages WHERE sent = 0");
+            $ok = $query->execute();
 
-            if ($mensaje) {
-                $update = $pdo->query("UPDATE messages SET was_read = 1");
+            if ($ok) {
+                $mensaje = $query->fetch(PDO::FETCH_ASSOC);
+                $mensaje = $mensaje ? $mensaje : array(
+                        "id" => -1,
+                        "title" => "NO HAY MENSAJE NUEVO",
+                        "body" => "Por el momento, no tienes mensajes nuevos",
+                        "icon_src" => "images/alert.png"
+                    );
+                $update = $pdo->query("UPDATE messages SET sent = 1");
 
                 if ($update) {
                     echo json_encode(array("status" => "OK",

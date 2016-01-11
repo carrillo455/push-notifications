@@ -70,7 +70,8 @@ self.addEventListener('push', function(event) {
                     throw new Error();
                 }
 
-                var title = mensaje.title,
+                var id = mensaje.id,
+                    title = mensaje.title,
                     body = mensaje.body,
                     icon = mensaje.icon_src;
 
@@ -79,7 +80,7 @@ self.addEventListener('push', function(event) {
                 var urlToOpen = "google.com";
 
                 var notificationFilter = {
-                    tag: 'simple-push-demo-notification'
+                    tag: 'simple-push-demo-notification'+id
                 };
 
                 var notificationData = {
@@ -117,11 +118,11 @@ self.addEventListener('push', function(event) {
                 });
             })
             .catch(function(err) {
-                console.error('A Problem occured with handling the push msg', err);
+                // console.error('A Problem occured with handling the push msg', err);
+                console.log("No hay mensajes nuevos.");
 
                 var title = 'No hay mensajes!';
-                var body = 'We were unable to get the information for this ' +
-                  'push message';
+                var body = 'Por el momento no hay mensajes nuevos.';
 
                 return showNotification(title, body);
             })
